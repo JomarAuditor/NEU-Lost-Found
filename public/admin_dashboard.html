@@ -1,159 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEU Lost & Found | Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Only add minimal new styles */
+        .data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        .data-table th, .data-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .data-table th { background-color: #f8f9fa; }
+        .section { margin-bottom: 30px; }
+    </style>
 </head>
-
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                <img src="New_Era_University.png"
-                    alt="NEU Logo" width="60">
+                <img src="New_Era_University.png" alt="NEU Logo" width="60">
                 <h1>NEU Lost & Found System</h1>
             </div>
             <nav>
-                <span>Admin User | Logged In</span>
-                <a href="index.html">Logout</a>
+                <span>Admin | Logged In</span>
+                <a href="/">Logout</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section class="dashboard-header">
-            <h3>Lost Item Management System</h3>
-            <div class="search-box">
-                <input type="text" placeholder="Search items...">
-                <button class="btn">Search</button>
-            </div>
-        </section>
+        <h2>📊 Admin Dashboard — Real-Time Data</h2>
 
-        <section class="stats">
-            <div class="stat-card">
-                <h4>Total Items</h4>
-                <p class="stat-number">47</p>
-            </div>
-            <div class="stat-card">
-                <h4>Pending</h4>
-                <p class="stat-number">12</p>
-            </div>
-            <div class="stat-card">
-                <h4>Claimed</h4>
-                <p class="stat-number">28</p>
-            </div>
-            <div class="stat-card">
-                <h4>In Storage</h4>
-                <p class="stat-number">7</p>
-            </div>
-        </section>
+        <div class="section">
+            <h3>1. Student Registrations</h3>
+            <table class="data-table" id="studentsTable">
+                <thead><tr><th>Student No</th><th>Username</th><th>Email</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <section class="filters">
-            <h4>Filter Items</h4>
-            <select>
-                <option>All Status</option>
-                <option>Pending</option>
-                <option>Claimed</option>
-                <option>In Storage</option>
-            </select>
-            <select>
-                <option>All Locations</option>
-                <option>Snell Library</option>
-                <option>Curry Center</option>
-                <option>Marino Center</option>
-            </select>
-            <input type="date">
-            <button class="btn secondary">Clear Filters</button>
-        </section>
+        <div class="section">
+            <h3>2. Login Activity</h3>
+            <table class="data-table" id="loginsTable">
+                <thead><tr><th>User</th><th>Role</th><th>Login Time</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <section class="items-table">
-            <h4>Reported Items</h4>
-            <table>
+        <div class="section">
+            <h3>3. Item Information</h3>
+            <table class="data-table" id="itemsTable">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Item Name</th>
-                        <th>Found By</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Item</th><th>Qty</th><th>Location</th><th>Date</th>
+                        <th>Found By</th><th>Student No</th><th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>LF-2024-00123</td>
-                        <td>iPhone 12 Pro - Black</td>
-                        <td>John Smith<br>N12345678</td>
-                        <td>Snell Library</td>
-                        <td>2024-12-01</td>
-                        <td>Pending</td>
-                        <td>
-                            <button class="btn small">View</button>
-                            <button class="btn small secondary">Claimed</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>LF-2024-00122</td>
-                        <td>Blue Backpack</td>
-                        <td>Sarah Johnson<br>N12345679</td>
-                        <td>Curry Center</td>
-                        <td>2024-11-30</td>
-                        <td>In Storage</td>
-                        <td>
-                            <button class="btn small">View</button>
-                            <button class="btn small secondary">Claimed</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>LF-2024-00121</td>
-                        <td>Student ID Card</td>
-                        <td>Mike Chen<br>N12345680</td>
-                        <td>Marino Center</td>
-                        <td>2024-11-29</td>
-                        <td>Claimed</td>
-                        <td>
-                            <button class="btn small">View</button>
-                            <button class="btn small danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>LF-2024-00120</td>
-                        <td>Calculus Textbook</td>
-                        <td>Emily Rodriguez<br>N12345681</td>
-                        <td>Dodge Hall</td>
-                        <td>2024-11-28</td>
-                        <td>Pending</td>
-                        <td>
-                            <button class="btn small">View</button>
-                            <button class="btn small secondary">Claimed</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
-        </section>
+        </div>
 
-        <section class="quick-actions">
-            <h4>Quick Actions</h4>
-            <div class="action-buttons">
-                <button class="btn">Export Data</button>
-                <button class="btn">Print Labels</button>
-                <button class="btn danger">Delete Selected</button>
-                <button class="btn">Add Manual Entry</button>
-            </div>
-        </section>
+        <div class="section">
+            <h3>4. Your Information (From Forms)</h3>
+            <table class="data-table" id="yourInfoTable">
+                <thead><tr><th>Name</th><th>Student No</th><th>Notes</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </main>
 
     <footer>
         <div class="container">
-            <p>NEU Lost & Found Admin Dashboard | System v2.1</p>
-            <p>Last Updated: Today 10:30 AM | Session: 29:45 remaining</p>
-            <p>&copy; 2024 Northeastern University</p>
+            <p>NEU Lost & Found Admin Dashboard | Real Data from Database</p>
+            <p>&copy; 2024 New Era University</p>
         </div>
     </footer>
-</body>
 
+    <script>
+        // Fetch data from server
+        async function loadData() {
+    try {
+        const res = await fetch('/api/admin-data');
+        const data = await res.json();
+
+        // Students
+        const studentsBody = document.querySelector('#studentsTable tbody');
+        studentsBody.innerHTML = data.students.map(s => 
+            `<tr><td>${s.student_no}</td><td>${s.username}</td><td>${s.email}</td></tr>`
+        ).join('');
+
+        // Login Logs
+        const loginsBody = document.querySelector('#loginsTable tbody');
+        loginsBody.innerHTML = data.logins.map(l => 
+            `<tr><td>${l.username}</td><td>${l.role}</td><td>${l.login_time}</td></tr>`
+        ).join('');
+
+        // Items
+        const itemsBody = document.querySelector('#itemsTable tbody');
+        itemsBody.innerHTML = data.items.map(i => 
+            `<tr>
+                <td>${i.item_name}</td>
+                <td>${i.quantity}</td>
+                <td>${i.location_found}</td>
+                <td>${i.date_found}</td>
+                <td>${i.found_by_name}</td>
+                <td>${i.student_no || '—'}</td>
+                <td>${i.status}</td>
+            </tr>`
+        ).join('');
+
+        // Your Info (same as items)
+        const yourInfoBody = document.querySelector('#yourInfoTable tbody');
+        yourInfoBody.innerHTML = data.items.map(i => 
+            `<tr><td>${i.found_by_name}</td><td>${i.student_no || '—'}</td><td>${i.notes || '—'}</td></tr>`
+        ).join('');
+
+    } catch (err) {
+        console.error(err);
+        alert('Failed to load dashboard data: ' + err.message);
+    }
+}
+
+        loadData();
+    </script>
+</body>
 </html>
