@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Lost & Found | Student Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Northeastern_University_seal.svg/150px-Northeastern_University_seal.svg.png"
+                    alt="NEU Logo" width="60">
+                <h2>Student Login</h2>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="student_signup.html">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-section">
+            <h3>Student Login</h3>
+            <p>Access your account to report found items</p>
+
+            <form id="loginForm" action="login.php" method="POST">
+                <div class="form-group">
+                    <label for="loginId">Email or Username:</label>
+                    <input type="text" id="loginId" name="loginId" required>
+                </div>
+            
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            
+                <div class="form-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+            
+                <button type="submit" class="btn">Login</button>
+            
+                <p><a href="#">Forgot Password?</a></p>
+            </form>
+
+            <p>Don't have an account? <a href="student_signup.html">Sign up here</a></p>
+        </section>
+
+        <section class="info-section">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Student Studying" width="100%">
+            <h4>Student Benefits</h4>
+            <ul>
+                <li>Quick item reporting</li>
+                <li>Help fellow students</li>
+                <li>Simple 3-step process</li>
+                <li>24/7 access</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Northeastern University Lost & Found System</p>
+            <a href="index.html">Back to Home</a>
+        </div>
+    </footer>
+</body>
+
+</html>

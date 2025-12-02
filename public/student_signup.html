@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEU Lost & Found | Student Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Northeastern_University_seal.svg/150px-Northeastern_University_seal.svg.png"
+                    alt="NEU Logo" width="60">
+                <h2>Student Registration</h2>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="student_login.html">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form-section">
+            <h3>Create Student Account</h3>
+            <p>Register to report found items on campus</p>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">NEU Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="name@northeastern.edu">
+                </div>
+
+                <div class="form-group">
+                    <label for="studentNo">Student Number:</label>
+                    <input type="text" id="studentNo" name="studentNo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the terms and conditions</label>
+                </div>
+
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+
+            <p>Already have an account? <a href="student_login.html">Login here</a></p>
+        </section>
+
+        <section class="info-section">
+            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Campus Library" width="100%">
+            <h4>Why Register?</h4>
+            <ul>
+                <li>Report found items easily</li>
+                <li>Help reunite items with owners</li>
+                <li>Contribute to campus community</li>
+                <li>Simple and secure process</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Northeastern University Lost & Found System</p>
+            <a href="index.html">Back to Home</a>
+        </div>
+    </footer>
+</body>
+
+</html>
