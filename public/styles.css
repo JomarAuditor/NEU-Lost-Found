@@ -1,5 +1,5 @@
 /* ============================================
-   CSS for NEU Lost & Found System
+   CSS for University Lost & Found System
    Following Week 4-5 Course Structure
    ============================================ */
 
@@ -33,7 +33,7 @@ h2,
 h3,
 h4 {
     color: #003366;
-    /* NEU Blue */
+    /* University Blue */
     margin-bottom: 15px;
 }
 
@@ -60,7 +60,7 @@ p {
 /* 4. Links */
 a {
     color: #00509e;
-    /* Lighter NEU Blue */
+    /* Lighter University Blue */
     text-decoration: none;
 }
 

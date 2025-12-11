@@ -25,7 +25,7 @@ db.connect((err) => {
         console.error('❌ Database connection failed:', err);
         return;
     }
-    console.log('✅ Connected to NEU Lost & Found database!');
+    console.log('✅ Connected to UNIVERSITY Lost & Found database!');
 });
 console.log('✅ Server routes loaded');
 
@@ -175,6 +175,26 @@ app.get('/api/admin-data', (req, res) => {
     });
 });
 
+// Update item status
+app.post('/api/update-item-status', express.json(), (req, res) => {
+    const { id, status } = req.body;
+
+    if (!id || !status) {
+        return res.status(400).json({ error: 'Item ID and status are required' });
+    }
+
+    const sql = 'UPDATE lost_items SET status = ? WHERE id = ?';
+    db.query(sql, [status, id], (err, result) => {
+        if (err) {
+            console.error('Update error:', err);
+            return res.status(500).json({ error: 'Database update failed' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+        res.json({ success: true });
+    });
+});
 // ===== START SERVER =====
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);

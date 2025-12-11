@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEU Lost & Found | Admin Dashboard</title>
+    <title>UNIVERSITY Lost & Found | Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         /* Only add minimal new styles */
@@ -17,8 +17,8 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="New_Era_University.png" alt="NEU Logo" width="60">
-                <h1>NEU Lost & Found System</h1>
+                <img src="university logo.png" alt="University Logo" width="60">
+                <h1>UNIVERSITY Lost & Found System</h1>
             </div>
             <nav>
                 <span>Admin | Logged In</span>
@@ -70,56 +70,93 @@
 
     <footer>
         <div class="container">
-            <p>NEU Lost & Found Admin Dashboard | Real Data from Database</p>
-            <p>&copy; 2024 New Era University</p>
+            <p>UNIVERSITY Lost & Found Admin Dashboard | Real Data from Database</p>
+            <p>&copy; 2024 University</p>
         </div>
     </footer>
 
     <script>
         // Fetch data from server
         async function loadData() {
-    try {
-        const res = await fetch('/api/admin-data');
-        const data = await res.json();
+            try {
+                const res = await fetch('/api/admin-data');
+                const data = await res.json();
 
-        // Students
-        const studentsBody = document.querySelector('#studentsTable tbody');
-        studentsBody.innerHTML = data.students.map(s => 
-            `<tr><td>${s.student_no}</td><td>${s.username}</td><td>${s.email}</td></tr>`
-        ).join('');
+                // Students
+                const studentsBody = document.querySelector('#studentsTable tbody');
+                studentsBody.innerHTML = data.students.map(s => 
+                    `<tr><td>${s.student_no}</td><td>${s.username}</td><td>${s.email}</td></tr>`
+                ).join('');
 
-        // Login Logs
-        const loginsBody = document.querySelector('#loginsTable tbody');
-        loginsBody.innerHTML = data.logins.map(l => 
-            `<tr><td>${l.username}</td><td>${l.role}</td><td>${l.login_time}</td></tr>`
-        ).join('');
+                // Login Logs
+                const loginsBody = document.querySelector('#loginsTable tbody');
+                loginsBody.innerHTML = data.logins.map(l => 
+                    `<tr><td>${l.username}</td><td>${l.role}</td><td>${l.login_time}</td></tr>`
+                ).join('');
 
-        // Items
-        const itemsBody = document.querySelector('#itemsTable tbody');
-        itemsBody.innerHTML = data.items.map(i => 
-            `<tr>
-                <td>${i.item_name}</td>
-                <td>${i.quantity}</td>
-                <td>${i.location_found}</td>
-                <td>${i.date_found}</td>
-                <td>${i.found_by_name}</td>
-                <td>${i.student_no || '—'}</td>
-                <td>${i.status}</td>
-            </tr>`
-        ).join('');
+                // Items with status dropdown
+                const itemsBody = document.querySelector('#itemsTable tbody');
+                itemsBody.innerHTML = data.items.map(i => `
+                    <tr>
+                        <td>${i.item_name}</td>
+                        <td>${i.quantity}</td>
+                        <td>${i.location_found}</td>
+                        <td>${i.date_found}</td>
+                        <td>${i.found_by_name}</td>
+                        <td>${i.student_no || '—'}</td>
+                        <td>
+                            <select class="status-select" data-item-id="${i.id}">
+                                <option value="Pending" ${i.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Found" ${i.status === 'Found' ? 'selected' : ''}>Found</option>
+                                <option value="Claimed" ${i.status === 'Claimed' ? 'selected' : ''}>Claimed</option>
+                                <option value="Returned" ${i.status === 'Returned' ? 'selected' : ''}>Returned</option>
+                                <option value="Unclaimed" ${i.status === 'Unclaimed' ? 'selected' : ''}>Unclaimed</option>
+                                <option value="Resolved / Closed" ${i.status === 'Resolved / Closed' ? 'selected' : ''}>Resolved / Closed</option>
+                                <option value="In Review" ${i.status === 'In Review' ? 'selected' : ''}>In Review</option>
+                                <option value="Disposed / Donated" ${i.status === 'Disposed / Donated' ? 'selected' : ''}>Disposed / Donated</option>
+                            </select>
+                        </td>
+                    </tr>
+                `).join('');
 
-        // Your Info (same as items)
-        const yourInfoBody = document.querySelector('#yourInfoTable tbody');
-        yourInfoBody.innerHTML = data.items.map(i => 
-            `<tr><td>${i.found_by_name}</td><td>${i.student_no || '—'}</td><td>${i.notes || '—'}</td></tr>`
-        ).join('');
+                // Your Info
+                const yourInfoBody = document.querySelector('#yourInfoTable tbody');
+                yourInfoBody.innerHTML = data.items.map(i => 
+                    `<tr><td>${i.found_by_name}</td><td>${i.student_no || '—'}</td><td>${i.notes || '—'}</td></tr>`
+                ).join('');
 
-    } catch (err) {
-        console.error(err);
-        alert('Failed to load dashboard data: ' + err.message);
-    }
-}
+            } catch (err) {
+                console.error(err);
+                alert('Failed to load dashboard data: ' + err.message);
+            }
+        }
 
+        // Handle status change
+        document.addEventListener('change', async (e) => {
+            if (e.target.classList.contains('status-select')) {
+                const select = e.target;
+                const itemId = select.dataset.itemId;
+                const newStatus = select.value;
+
+                try {
+                    const res = await fetch('/api/update-item-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: itemId, status: newStatus })
+                    });
+
+                    if (res.ok) {
+                        alert('✅ Status updated!');
+                    } else {
+                        throw new Error('Update failed');
+                    }
+                } catch (err) {
+                    alert('❌ Failed to update status');
+                }
+            }
+        });
+
+        // Load data on page load
         loadData();
     </script>
 </body>
