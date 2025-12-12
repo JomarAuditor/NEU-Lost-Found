@@ -82,16 +82,34 @@ app.post('/signup', (req, res) => {
     });
 });
 
-// Student login (with logging)
+// Student login (with logging) - FIXED VERSION
 app.post('/login', (req, res) => {
     const { loginId, password } = req.body;
-    const sql = 'SELECT * FROM students WHERE email = ? OR student_no = ?';
-    db.query(sql, [loginId, loginId], (err, results) => {
-        if (err) return res.status(500).send('Login error');
-        if (results.length === 0 || results[0].password !== password) {
-            return res.status(400).send('Wrong credentials');
+
+    // Fix: Check if loginId matches email, username, OR student_no
+    const sql = 'SELECT * FROM students WHERE email = ? OR username = ? OR student_no = ?';
+
+    db.query(sql, [loginId, loginId, loginId], (err, results) => {
+        if (err) {
+            console.error('❌ Login error:', err);
+            return res.status(500).send('Login error');
         }
-        logLogin(results[0].username, 'student');
+
+        if (results.length === 0) {
+            return res.status(400).send('Wrong credentials: User not found');
+        }
+
+        const user = results[0];
+
+        // Simple password check (in production, use hashed passwords!)
+        if (user.password !== password) {
+            return res.status(400).send('Wrong credentials: Incorrect password');
+        }
+
+        // Log the login
+        logLogin(user.username, 'student');
+
+        // Redirect to lost item form
         res.redirect('/lost_item_form.html');
     });
 });
