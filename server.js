@@ -70,8 +70,6 @@ app.get('/admin_dashboard.html', (req, res) => {
 });
 
 // ===== POST ROUTES =====
-// These routes handle form submissions and data processing
-// Implements POST request handling from Week 9 lessons
 
 // Student signup
 app.post('/signup', (req, res) => {
@@ -99,20 +97,7 @@ app.post('/signup', (req, res) => {
                 </div>
             `);
         }
-<<<<<<< HEAD
-       // In server.js → /signup route
-        res.send(`
-            <div style="max-width: 600px; margin: 50px auto; padding: 30px; background: #d4edda; border-radius: 8px; text-align: center; font-family: Arial;">
-            <h2 style="color: #155724;">🎉 Account Created Successfully!</h2>
-            <p style="color: #155724; font-size: 1.1rem;">
-                Your student account has been successfully created.<br>
-                You can now log in to start reporting found items on campus.
-            </p>
-            <div style="margin-top: 20px;">
-                <a href="student_login.html" style="display: inline-block; background: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Log In Now</a>
-                <a href="index.html" style="display: inline-block; background: #6c757d; color: white; padding: 10 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Return to Home</a>
-            </div>
-=======
+        // ✅ Unified success message (kept your new version)
         res.send(`
             <div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 30px; border-radius: 12px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                 <h2 style="font-size: 2rem; margin-bottom: 20px;">🎉 Account Created Successfully!</h2>
@@ -121,7 +106,6 @@ app.post('/signup', (req, res) => {
                     <a href="/student_login.html" class="btn" style="display: inline-block; margin: 10px; padding: 12px 25px; font-size: 1.1rem;">Log In Now</a>
                     <a href="/" class="btn secondary" style="display: inline-block; margin: 10px; padding: 12px 25px; font-size: 1.1rem;">Return to Home</a>
                 </div>
->>>>>>> 8efc15f8541a838f57820b9e230c7d991884123f
             </div>
         `);
     });
@@ -130,16 +114,12 @@ app.post('/signup', (req, res) => {
 // Student login (with logging) - FIXED VERSION
 app.post('/login', (req, res) => {
     const { loginId, password } = req.body;
-
-    // Fix: Check if loginId matches email, username, OR student_no
     const sql = 'SELECT * FROM students WHERE email = ? OR username = ? OR student_no = ?';
-
     db.query(sql, [loginId, loginId, loginId], (err, results) => {
         if (err) {
             console.error('❌ Login error:', err);
             return res.status(500).send('Login error');
         }
-
         if (results.length === 0) {
             return res.status(400).send(`
                 <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
@@ -149,10 +129,7 @@ app.post('/login', (req, res) => {
                 </div>
             `);
         }
-
         const user = results[0];
-
-        // Simple password check (in production, use hashed passwords!)
         if (user.password !== password) {
             return res.status(400).send(`
                 <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
@@ -162,11 +139,7 @@ app.post('/login', (req, res) => {
                 </div>
             `);
         }
-
-        // Log the login
         logLogin(user.username, 'student');
-
-        // Redirect to lost item form
         res.redirect('/lost_item_form.html');
     });
 });
@@ -178,13 +151,11 @@ app.post('/report-item', (req, res) => {
         location, dateFound, timeFound, building,
         foundByName, studentNo, notes
     } = req.body;
-
     const sql = `
         INSERT INTO lost_items 
         (item_name, quantity, category, description, location_found, building, date_found, time_found, found_by_name, student_no, notes)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
-
     db.query(sql, [
         itemName, quantity || 1, category || null, description,
         location, building || null, dateFound, timeFound,
@@ -236,27 +207,23 @@ app.post('/admin-login', (req, res) => {
 app.get('/api/admin-data', (req, res) => {
     const data = {};
     let completed = 0;
-
     function checkDone() {
         if (completed === 3) {
             res.json(data);
         }
     }
-
     // Get students
     db.query('SELECT student_no, username, email FROM students', (err, rows) => {
         data.students = rows || [];
         completed++;
         checkDone();
     });
-
     // Get login logs (latest 20)
     db.query('SELECT username, role, login_time FROM login_logs ORDER BY login_time DESC LIMIT 20', (err, rows) => {
         data.logins = rows || [];
         completed++;
         checkDone();
     });
-
     // Get items
     db.query('SELECT * FROM lost_items ORDER BY created_at DESC', (err, rows) => {
         data.items = rows || [];
@@ -268,11 +235,9 @@ app.get('/api/admin-data', (req, res) => {
 // Update item status
 app.post('/api/update-item-status', express.json(), (req, res) => {
     const { id, status } = req.body;
-
     if (!id || !status) {
         return res.status(400).json({ error: 'Item ID and status are required' });
     }
-
     const sql = 'UPDATE lost_items SET status = ? WHERE id = ?';
     db.query(sql, [status, id], (err, result) => {
         if (err) {
@@ -285,6 +250,7 @@ app.post('/api/update-item-status', express.json(), (req, res) => {
         res.json({ success: true });
     });
 });
+
 // ===== START SERVER =====
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
