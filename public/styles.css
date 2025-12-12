@@ -4,6 +4,8 @@
    ============================================ */
 
 /* ---------- Week 4: Basic CSS Styles ---------- */
+/* This stylesheet implements fundamental CSS concepts from Week 4 lessons
+   including selectors, styling properties, and basic layout techniques */
 
 /* 1. Reset & Base Styles */
 * {
@@ -17,6 +19,8 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
+    padding-top: 90px;
+    /* Added for fixed navbar */
 }
 
 /* 2. Container Class */
@@ -76,12 +80,27 @@ img {
 }
 
 /* ---------- Week 5: Box Model & Layout ---------- */
+/* Implements intermediate CSS concepts from Week 5 lessons
+   including box model, positioning, display properties, and responsive design */
 
-/* 1. Header Styles */
+/* 1. Header Styles - UPDATED FOR FIXED NAVBAR */
 header {
     background-color: #003366;
     padding: 15px 0;
-    margin-bottom: 30px;
+    position: fixed;
+    /* Week 5: Fixed positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
 }
 
 header .logo {
@@ -99,6 +118,8 @@ header .logo h1,
 header .logo h2 {
     color: white;
     margin: 0;
+    font-size: 1.5rem;
+    /* Adjusted for navbar */
 }
 
 nav {
@@ -109,12 +130,20 @@ nav {
 
 nav a {
     color: white;
-    padding: 5px 10px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 500;
 }
 
 nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+/* Navigation text styling */
+nav .nav-text {
+    color: white;
+    font-weight: 500;
 }
 
 /* 2. Main Content Area */
@@ -162,6 +191,7 @@ footer a {
 .hero {
     position: relative;
     margin-bottom: 30px;
+    margin-top: 20px; /* Added space below navbar */
 }
 
 .hero-text {
@@ -221,6 +251,7 @@ footer a {
     border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .form-group {
@@ -296,6 +327,7 @@ li {
     border-radius: 8px;
     padding: 20px;
     overflow-x: auto;
+    margin-top: 20px;
 }
 
 table {
@@ -350,6 +382,7 @@ tbody tr:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    margin-top: 20px;  /* Added space below navbar */
 }
 
 .search-box {
@@ -445,11 +478,7 @@ tbody tr:hover {
 /* ---------- Positioning & Display ---------- */
 
 /* 1. Display Property Examples */
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+/* Already in header .container above */
 
 .option-cards {
     display: flex;
@@ -560,6 +589,8 @@ th {
 }
 
 /* ---------- Responsive Design ---------- */
+/* Implements responsive design concepts from Week 5 lessons
+   Using media queries to adapt layout for different screen sizes */
 
 @media (max-width: 768px) {
 
@@ -581,17 +612,29 @@ th {
         flex-direction: column;
         text-align: center;
         gap: 15px;
+        padding: 10px 0;
+    }
+
+    header .logo h1 {
+        font-size: 1.3rem;
     }
 
     nav {
         justify-content: center;
         flex-wrap: wrap;
+        gap: 10px;
     }
 
     /* 3. Adjust hero text */
     .hero-text {
         position: static;
         margin-top: 10px;
+        background-color: #003366;
+    }
+
+    /* Adjust body padding for mobile navbar */
+    body {
+        padding-top: 140px;
     }
 
     /* 4. Adjust dashboard header */
@@ -646,9 +689,21 @@ th {
     .btn {
         padding: 8px 16px;
     }
+
+    /* Adjust navbar for very small screens */
+    header .logo h1 {
+        font-size: 1.1rem;
+    }
+
+    nav a {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
 }
 
 /* ---------- Debugging Example Comment ---------- */
+/* Implements CSS debugging concepts from Week 4 lessons
+   Demonstrates systematic approach to identifying and fixing CSS issues */
 
 /* 
 Debugging Issue Example (Week 4 Deliverable):
@@ -659,6 +714,8 @@ Tested: On multiple screen sizes
 */
 
 /* ---------- ID and Class Selector Examples ---------- */
+/* Implements CSS selector concepts from Week 4 lessons
+   Demonstrates different types of selectors for styling elements */
 
 /* ID Selector (unique element) */
 #successMessage {
@@ -757,10 +814,24 @@ img {
 
     body {
         font-size: 12pt;
+        padding-top: 0;
+        /* Remove navbar padding for print */
     }
 
     .container {
         width: 100%;
         max-width: none;
     }
+
+    header {
+        position: static;
+        /* Remove fixed positioning for print */
+    }
+}
+
+/* Add this to your CSS */
+.dashboard-title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

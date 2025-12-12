@@ -1,33 +1,43 @@
 <!DOCTYPE html>
+<!-- HTML5 Document Structure - Implements Week 2 lessons on HTML basics -->
 <html lang="en">
 
 <head>
+    <!-- Meta tags for character encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIVERSITY Lost & Found | Admin Login</title>
+    <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <!-- Header section with university branding and navigation -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <header>
         <div class="container">
             <div class="logo">
-                <img src="university logo.png"
+                <img src="New_Era_University.svg.png"
                     alt="University Logo" width="60">
                 <h1>UNIVERSITY Lost & Found System</h1>
             </div>
             <nav>
                 <a href="index.html">Home</a>
-                <a href="student_login.html">Student Portal</a>
+                <a href="student_login.html">Student Login</a>
+                <a href="admin_login.html">Admin Login</a>
             </nav>
         </div>
     </header>
 
+    <!-- Main content area containing the admin login form and information -->
+    <!-- Implements HTML form elements and structure from Week 3 lessons -->
     <main class="container">
+        <!-- Admin login form section -->
         <section class="form-section">
             <h3>Administrator Login</h3>
             <p>Restricted access for University staff only</p>
 
+            <!-- Admin login form with required fields -->
             <form action="/admin-login" method="POST">
                 <div class="form-group">
                     <label for="adminUsername">Username *:</label>
@@ -39,17 +49,11 @@
                     <input type="password" id="adminPassword" name="adminPassword" required>
                 </div>
 
-                <div class="form-group">
-                    <input type="checkbox" id="rememberDevice" name="rememberDevice">
-                    <label for="rememberDevice">Remember this device</label>
-                </div>
-
                 <button type="submit" class="btn">Login</button>
             </form>
-
-            <p><a href="#">Forgot credentials?</a></p>
         </section>
 
+        <!-- Admin information section -->
         <section class="info-section">
             <img src="adminnnnn.jpg"
                 alt="Admin Office" width="100%">
@@ -70,6 +74,8 @@
         </section>
     </main>
 
+    <!-- Footer section with copyright information -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <footer>
         <div class="container">
             <p>&copy; 2024 University Lost & Found System | Admin Portal</p>

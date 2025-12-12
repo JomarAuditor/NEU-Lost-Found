@@ -99,6 +99,7 @@ app.post('/signup', (req, res) => {
                 </div>
             `);
         }
+<<<<<<< HEAD
        // In server.js → /signup route
         res.send(`
             <div style="max-width: 600px; margin: 50px auto; padding: 30px; background: #d4edda; border-radius: 8px; text-align: center; font-family: Arial;">
@@ -111,6 +112,16 @@ app.post('/signup', (req, res) => {
                 <a href="student_login.html" style="display: inline-block; background: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Log In Now</a>
                 <a href="index.html" style="display: inline-block; background: #6c757d; color: white; padding: 10 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Return to Home</a>
             </div>
+=======
+        res.send(`
+            <div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 30px; border-radius: 12px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 2rem; margin-bottom: 20px;">🎉 Account Created Successfully!</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 25px;">Your student account has been successfully created. You can now log in to start reporting found items on campus.</p>
+                <div style="margin-top: 30px;">
+                    <a href="/student_login.html" class="btn" style="display: inline-block; margin: 10px; padding: 12px 25px; font-size: 1.1rem;">Log In Now</a>
+                    <a href="/" class="btn secondary" style="display: inline-block; margin: 10px; padding: 12px 25px; font-size: 1.1rem;">Return to Home</a>
+                </div>
+>>>>>>> 8efc15f8541a838f57820b9e230c7d991884123f
             </div>
         `);
     });
