@@ -1,14 +1,19 @@
 <!DOCTYPE html>
+<!-- HTML5 Document Structure - Implements Week 2 lessons on HTML basics -->
 <html lang="en">
 
 <head>
+    <!-- Meta tags for character encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIVERSITY Lost & Found | Report Found Item</title>
+    <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <!-- Header section with university branding and navigation -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <header>
         <div class="container">
             <div class="logo">
@@ -17,18 +22,21 @@
                 <H1>UNIVERSITY Lost & Found System</H1>
             </div>
             <nav>
-                <a href="index.html">Home</a>
-                <span>Logged in as: Student</span>
-                <a href="#">Logout</a>
+                <span class="nav-text">Logged in as: Student</span>
+                <a href="/">Logout</a>
             </nav>
         </div>
     </header>
 
+    <!-- Main content area containing the item reporting form -->
+    <!-- Implements HTML form elements and structure from Week 3 lessons -->
     <main class="container">
         <section class="form-section full-width">
             <h3>Found Item Details</h3>
             <p>Please fill in all required fields (*)</p>
 
+            <!-- Item reporting form with various input types -->
+            <!-- Implements advanced HTML form handling concepts from Week 3 lessons -->
             <form action="/report-item" method="POST">
                 <h4>Item Information</h4>
                 <div class="form-group">
@@ -122,6 +130,8 @@
         </section>
     </main>
 
+    <!-- Footer section with contact information -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <footer>
         <div class="container">
             <p>UNIVERSITY Lost & Found Office: Student Center Room 101 | Hours: Mon-Fri 9AM-5PM</p>

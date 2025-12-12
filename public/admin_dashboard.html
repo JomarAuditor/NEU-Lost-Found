@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+<!-- HTML5 Document Structure - Implements Week 2 lessons on HTML basics -->
 <html lang="en">
 <head>
+    <!-- Meta tags for character encoding and viewport settings -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIVERSITY Lost & Found | Admin Dashboard</title>
+    <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
     <style>
         /* Only add minimal new styles */
+        /* Implements CSS styling concepts from Week 4 lessons */
         .data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
         .data-table th, .data-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
         .data-table th { background-color: #f8f9fa; }
@@ -14,6 +18,8 @@
     </style>
 </head>
 <body>
+    <!-- Header section with university branding and navigation -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <header>
         <div class="container">
             <div class="logo">
@@ -21,15 +27,18 @@
                 <h1>UNIVERSITY Lost & Found System</h1>
             </div>
             <nav>
-                <span>Admin | Logged In</span>
+                <span class="nav-text">Admin | Logged In</span>
                 <a href="/">Logout</a>
             </nav>
         </div>
     </header>
 
+    <!-- Main content area containing dashboard sections -->
+    <!-- Implements HTML table elements and structure from Week 3 lessons -->
     <main class="container">
         <h2 class="dashboard-title">📊 Admin Dashboard — Real-Time Data</h2>
 
+        <!-- Section 1: Student Registrations -->
         <div class="section">
             <h3>1. Student Registrations</h3>
             <table class="data-table" id="studentsTable">
@@ -38,6 +47,7 @@
             </table>
         </div>
 
+        <!-- Section 2: Login Activity -->
         <div class="section">
             <h3>2. Login Activity</h3>
             <table class="data-table" id="loginsTable">
@@ -46,6 +56,7 @@
             </table>
         </div>
 
+        <!-- Section 3: Item Information -->
         <div class="section">
             <h3>3. Item Information</h3>
             <table class="data-table" id="itemsTable">
@@ -59,6 +70,7 @@
             </table>
         </div>
 
+        <!-- Section 4: Your Information -->
         <div class="section">
             <h3>4. Your Information (From Forms)</h3>
             <table class="data-table" id="yourInfoTable">
@@ -68,6 +80,8 @@
         </div>
     </main>
 
+    <!-- Footer section with copyright information -->
+    <!-- Implements semantic HTML structure from Week 2 lessons -->
     <footer>
         <div class="container">
             <p>UNIVERSITY Lost & Found Admin Dashboard | Real Data from Database</p>

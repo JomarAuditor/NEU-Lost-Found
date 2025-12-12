@@ -4,6 +4,8 @@
    ============================================ */
 
 /* ---------- Week 4: Basic CSS Styles ---------- */
+/* This stylesheet implements fundamental CSS concepts from Week 4 lessons
+   including selectors, styling properties, and basic layout techniques */
 
 /* 1. Reset & Base Styles */
 * {
@@ -78,6 +80,8 @@ img {
 }
 
 /* ---------- Week 5: Box Model & Layout ---------- */
+/* Implements intermediate CSS concepts from Week 5 lessons
+   including box model, positioning, display properties, and responsive design */
 
 /* 1. Header Styles - UPDATED FOR FIXED NAVBAR */
 header {
@@ -134,6 +138,12 @@ nav a {
 nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
     text-decoration: none;
+}
+
+/* Navigation text styling */
+nav .nav-text {
+    color: white;
+    font-weight: 500;
 }
 
 /* 2. Main Content Area */
@@ -579,6 +589,8 @@ th {
 }
 
 /* ---------- Responsive Design ---------- */
+/* Implements responsive design concepts from Week 5 lessons
+   Using media queries to adapt layout for different screen sizes */
 
 @media (max-width: 768px) {
 
@@ -690,6 +702,8 @@ th {
 }
 
 /* ---------- Debugging Example Comment ---------- */
+/* Implements CSS debugging concepts from Week 4 lessons
+   Demonstrates systematic approach to identifying and fixing CSS issues */
 
 /* 
 Debugging Issue Example (Week 4 Deliverable):
@@ -700,6 +714,8 @@ Tested: On multiple screen sizes
 */
 
 /* ---------- ID and Class Selector Examples ---------- */
+/* Implements CSS selector concepts from Week 4 lessons
+   Demonstrates different types of selectors for styling elements */
 
 /* ID Selector (unique element) */
 #successMessage {
