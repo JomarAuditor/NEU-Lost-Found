@@ -51,21 +51,14 @@
             <table class="data-table" id="itemsTable">
                 <thead>
                     <tr>
-                        <th>Item</th><th>Qty</th><th>Location</th><th>Date</th>
-                        <th>Found By</th><th>Student No</th><th>Status</th>
+                        <th>Item</th><th>Qty</th><th>Location</th><th>Date</th><th>Found By</th><th>Student No</th><th>Description</th><th>Notes</th><th>Status</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
 
-        <div class="section">
-            <h3>4. Your Information (From Forms)</h3>
-            <table class="data-table" id="yourInfoTable">
-                <thead><tr><th>Name</th><th>Student No</th><th>Notes</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
+
     </main>
 
     <footer>
@@ -88,11 +81,22 @@
                     `<tr><td>${s.student_no}</td><td>${s.username}</td><td>${s.email}</td></tr>`
                 ).join('');
 
-                // Login Logs
+                // Login Logs with PHT
                 const loginsBody = document.querySelector('#loginsTable tbody');
-                loginsBody.innerHTML = data.logins.map(l => 
-                    `<tr><td>${l.username}</td><td>${l.role}</td><td>${l.login_time}</td></tr>`
-                ).join('');
+                loginsBody.innerHTML = data.logins.map(l => {
+                    const utcTime = new Date(l.login_time); // Parse the UTC time
+                    const phTime = utcTime.toLocaleString('en-PH', {
+                        timeZone: 'Asia/Manila',
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false // Use 24-hour format
+                    });
+                    return `<tr><td>${l.username}</td><td>${l.role}</td><td>${phTime}</td></tr>`;
+                }).join('');
 
                 // Items with status dropdown
                 const itemsBody = document.querySelector('#itemsTable tbody');
@@ -104,16 +108,14 @@
                         <td>${i.date_found}</td>
                         <td>${i.found_by_name}</td>
                         <td>${i.student_no || '—'}</td>
+                        <td>${i.description || '—'}</td>
+                        <td>${i.notes || '—'}</td>
                         <td>
                             <select class="status-select" data-item-id="${i.id}">
                                 <option value="Pending" ${i.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                                <option value="Found" ${i.status === 'Found' ? 'selected' : ''}>Found</option>
+                                <option value="Verified" ${i.status === 'Verified' ? 'selected' : ''}>Verified</option>
                                 <option value="Claimed" ${i.status === 'Claimed' ? 'selected' : ''}>Claimed</option>
-                                <option value="Returned" ${i.status === 'Returned' ? 'selected' : ''}>Returned</option>
                                 <option value="Unclaimed" ${i.status === 'Unclaimed' ? 'selected' : ''}>Unclaimed</option>
-                                <option value="Resolved / Closed" ${i.status === 'Resolved / Closed' ? 'selected' : ''}>Resolved / Closed</option>
-                                <option value="In Review" ${i.status === 'In Review' ? 'selected' : ''}>In Review</option>
-                                <option value="Disposed / Donated" ${i.status === 'Disposed / Donated' ? 'selected' : ''}>Disposed / Donated</option>
                             </select>
                         </td>
                     </tr>

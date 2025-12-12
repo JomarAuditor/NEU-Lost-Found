@@ -1,4 +1,7 @@
 // server.js
+// This is the backend server file for the University Lost & Found System
+// Implements Node.js and Express.js concepts from Week 8 lessons
+// Handles routing, database connections, and form processing
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
@@ -13,6 +16,8 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MySQL (XAMPP)
+// This section establishes a connection to the MySQL database
+// Implements database connectivity concepts from Week 7 lessons
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -38,6 +43,8 @@ function logLogin(username, role) {
 }
 
 // ===== GET ROUTES =====
+// These routes serve static HTML files to the client
+// Implements Express.js routing concepts from Week 9 lessons
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
@@ -63,6 +70,8 @@ app.get('/admin_dashboard.html', (req, res) => {
 });
 
 // ===== POST ROUTES =====
+// These routes handle form submissions and data processing
+// Implements POST request handling from Week 9 lessons
 
 // Student signup
 app.post('/signup', (req, res) => {
@@ -74,24 +83,79 @@ app.post('/signup', (req, res) => {
     db.query(sql, [studentNo, username, email, password], (err, result) => {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY') {
-                return res.status(400).send('Email or student number already exists!');
+                return res.status(400).send(`
+                    <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 15px;">⚠️ Registration Error</h2>
+                        <p style="font-size: 1.1rem; margin-bottom: 20px;">Email or student number already exists!</p>
+                        <a href="/student_signup.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Signup</a>
+                    </div>
+                `);
             }
-            return res.status(500).send('Server error');
+            return res.status(500).send(`
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">❌ Server Error</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">An unexpected error occurred. Please try again.</p>
+                    <a href="/student_signup.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Signup</a>
+                </div>
+            `);
         }
-        res.send('🎉 Student account created! You can now log in.');
+       // In server.js → /signup route
+        res.send(`
+            <div style="max-width: 600px; margin: 50px auto; padding: 30px; background: #d4edda; border-radius: 8px; text-align: center; font-family: Arial;">
+            <h2 style="color: #155724;">🎉 Account Created Successfully!</h2>
+            <p style="color: #155724; font-size: 1.1rem;">
+                Your student account has been successfully created.<br>
+                You can now log in to start reporting found items on campus.
+            </p>
+            <div style="margin-top: 20px;">
+                <a href="student_login.html" style="display: inline-block; background: #003366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Log In Now</a>
+                <a href="index.html" style="display: inline-block; background: #6c757d; color: white; padding: 10 20px; text-decoration: none; border-radius: 4px; margin: 5px;">Return to Home</a>
+            </div>
+            </div>
+        `);
     });
 });
 
-// Student login (with logging)
+// Student login (with logging) - FIXED VERSION
 app.post('/login', (req, res) => {
     const { loginId, password } = req.body;
-    const sql = 'SELECT * FROM students WHERE email = ? OR student_no = ?';
-    db.query(sql, [loginId, loginId], (err, results) => {
-        if (err) return res.status(500).send('Login error');
-        if (results.length === 0 || results[0].password !== password) {
-            return res.status(400).send('Wrong credentials');
+
+    // Fix: Check if loginId matches email, username, OR student_no
+    const sql = 'SELECT * FROM students WHERE email = ? OR username = ? OR student_no = ?';
+
+    db.query(sql, [loginId, loginId, loginId], (err, results) => {
+        if (err) {
+            console.error('❌ Login error:', err);
+            return res.status(500).send('Login error');
         }
-        logLogin(results[0].username, 'student');
+
+        if (results.length === 0) {
+            return res.status(400).send(`
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">⚠️ Login Failed</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Wrong credentials: User not found</p>
+                    <a href="/student_login.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Login</a>
+                </div>
+            `);
+        }
+
+        const user = results[0];
+
+        // Simple password check (in production, use hashed passwords!)
+        if (user.password !== password) {
+            return res.status(400).send(`
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">⚠️ Login Failed</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Wrong credentials: Incorrect password</p>
+                    <a href="/student_login.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Login</a>
+                </div>
+            `);
+        }
+
+        // Log the login
+        logLogin(user.username, 'student');
+
+        // Redirect to lost item form
         res.redirect('/lost_item_form.html');
     });
 });
@@ -117,14 +181,23 @@ app.post('/report-item', (req, res) => {
     ], (err, result) => {
         if (err) {
             console.error(err);
-            return res.status(500).send('Failed to report item');
+            return res.status(500).send(`
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">❌ Submission Error</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Failed to report item. Please try again.</p>
+                    <a href="/lost_item_form.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Form</a>
+                </div>
+            `);
         }
         res.send(`
-            <h2>✅ Thank you!</h2>
-            <p>Your report has been submitted successfully.</p>
-            <p><strong>Important:</strong> Please submit this item to the NEU Lost & Found room (Student Center 101) within 48 hours.</p>
-            <p>Office Hours: Mon-Fri 9AM-5PM</p>
-            <a href="/" class="btn" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#2D5852; color:white; text-decoration:none; border-radius:4px;">Return to Home</a>
+            <div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 20px; border-radius: 8px; margin: 20px auto; max-width: 800px;">
+                <h2>✅ Thank you!</h2>
+                <p>Your report has been submitted successfully.</p>
+                <p><strong>Important:</strong> Please submit this item to the NEU Lost & Found room (Student Center 101) within 48 hours.</p>
+                <p>Office Hours: Mon-Fri 9AM-5PM</p>
+                <a href="/" class="btn" style="display:inline-block; margin-top:20px;">Return to Home</a>
+                <a href="/lost_item_form.html" class="btn secondary" style="display:inline-block; margin-top:20px; margin-left: 10px;">Report Another Item</a>
+            </div>
         `);
     });
 });
@@ -135,7 +208,13 @@ app.post('/admin-login', (req, res) => {
     const sql = 'SELECT * FROM admins WHERE username = ?';
     db.query(sql, [adminUsername], (err, results) => {
         if (err || results.length === 0 || results[0].password !== adminPassword) {
-            return res.status(400).send('Invalid admin credentials');
+            return res.status(400).send(`
+                <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 600px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 15px;">⚠️ Login Failed</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Invalid admin credentials</p>
+                    <a href="/admin_login.html" class="btn" style="display: inline-block; margin-top: 15px; padding: 12px 25px; font-size: 1.1rem;">← Go Back to Admin Login</a>
+                </div>
+            `);
         }
         logLogin(adminUsername, 'admin');
         res.redirect('/admin_dashboard.html');
