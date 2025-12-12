@@ -8,6 +8,7 @@
     <title>UNIVERSITY Lost & Found | Admin Dashboard</title>
     <!-- Link to external CSS stylesheet -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="logo" href="New_Era_University.png">
     <style>
         /* Only add minimal new styles */
         /* Implements CSS styling concepts from Week 4 lessons */
@@ -51,7 +52,7 @@
         <div class="section">
             <h3>2. Login Activity</h3>
             <table class="data-table" id="loginsTable">
-                <thead><tr><th>User</th><th>Role</th><th>Login Time</th></tr></thead>
+                <thead><tr><th>User</th><th>Role</th><th>Login Time (PHT)</th></tr></thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -69,18 +70,6 @@
             </table>
         </div>
 
-<<<<<<< HEAD
-
-=======
-        <!-- Section 4: Your Information -->
-        <div class="section">
-            <h3>4. Your Information (From Forms)</h3>
-            <table class="data-table" id="yourInfoTable">
-                <thead><tr><th>Name</th><th>Student No</th><th>Notes</th></tr></thead>
-                <tbody></tbody>
-            </table>
-        </div>
->>>>>>> 8efc15f8541a838f57820b9e230c7d991884123f
     </main>
 
     <!-- Footer section with copyright information -->
@@ -145,11 +134,7 @@
                     </tr>
                 `).join('');
 
-                // Your Info
-                const yourInfoBody = document.querySelector('#yourInfoTable tbody');
-                yourInfoBody.innerHTML = data.items.map(i => 
-                    `<tr><td>${i.found_by_name}</td><td>${i.student_no || '—'}</td><td>${i.notes || '—'}</td></tr>`
-                ).join('');
+
 
             } catch (err) {
                 console.error(err);
